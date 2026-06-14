@@ -25,7 +25,7 @@ A full-stack fintech-inspired personal finance management application built with
 - Chart.js
 - Bootstrap Icons
 
-##Installation Guide
+## Installation Guide
 
 ```bash
 git clone https://github.com/shraddhagupta-11/SmartSpend.git

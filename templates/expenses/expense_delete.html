@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <a
+        href="{% url 'expense_list' %}"
+        class="back-link"
+    >
+        ← Expenses
+    </a>
+
+    <div class="page-title">
+        Delete Expense
+    </div>
+
+    <div class="page-subtitle">
+        Review before removing this record.
+    </div>
+
+</div>
+
+<div class="delete-card">
+
+    <div class="delete-icon">
+
+        ⚠️
+
+    </div>
+
+    <h3>
+
+        {{ expense.title }}
+
+    </h3>
+
+    <div class="delete-details">
+
+        <p>
+
+            Amount:
+            <strong>
+                ₹{{ expense.amount }}
+            </strong>
+
+        </p>
+
+        <p>
+
+            Category:
+            <strong>
+                {{ expense.category }}
+            </strong>
+
+        </p>
+
+        <p>
+
+            Date:
+            <strong>
+                {{ expense.expense_date }}
+            </strong>
+
+        </p>
+
+    </div>
+
+    <div class="delete-warning">
+
+        This action cannot be undone.
+
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-actions">
+
+            <a
+                href="{% url 'expense_list' %}"
+                class="secondary-btn"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="danger-btn"
+            >
+                Delete Expense
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

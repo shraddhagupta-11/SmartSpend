@@ -1,0 +1,54 @@
+{% extends "auth_base.html" %}
+
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="auth-header">
+
+            <div class="auth-icon">
+                🚀
+            </div>
+
+            <h1>
+                Create Account
+            </h1>
+
+            <p>
+                Start your financial journey today.
+            </p>
+
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button
+                type="submit"
+                class="auth-btn"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+
+            Already have an account?
+
+            <a href="{% url 'login' %}">
+                Sign In
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

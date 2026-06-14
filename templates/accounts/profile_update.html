@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <div class="profile-card">
+
+        <div class="profile-header">
+
+            <h1>
+                Profile Settings
+            </h1>
+
+            <p>
+                Manage your account information.
+            </p>
+
+        </div>
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+            <div class="profile-section">
+
+                <h3>
+                    Account Information
+                </h3>
+
+                {{ user_form.as_p }}
+
+            </div>
+
+            <div class="profile-section">
+
+                <h3>
+                    Personal Details
+                </h3>
+
+                {{ profile_form.as_p }}
+
+            </div>
+
+            <button
+                type="submit"
+                class="auth-btn"
+            >
+                Save Changes
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

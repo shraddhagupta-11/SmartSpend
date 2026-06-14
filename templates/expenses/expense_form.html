@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <a
+        href="{% url 'expense_list' %}"
+        class="back-link"
+    >
+        ← Expenses
+    </a>
+
+    <div class="page-title">
+        Expense
+    </div>
+
+    <div class="page-subtitle">
+        Create or update an expense.
+    </div>
+
+</div>
+
+<div class="form-wrapper">
+
+    <div class="form-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {% for field in form %}
+
+            <div class="form-group">
+
+                <label>
+
+                    {{ field.label }}
+
+                </label>
+
+                {{ field }}
+
+                {% if field.errors %}
+
+                <div class="field-error">
+
+                    {{ field.errors }}
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+            <div class="form-actions">
+
+                <a
+                    href="{% url 'expense_list' %}"
+                    class="secondary-btn"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Save Expense
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,428 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div class="page-title">
+        Financial Analytics
+    </div>
+
+    <div class="page-subtitle">
+        Understand your financial habits and track long-term growth.
+    </div>
+
+</div>
+
+<!-- Analytics Overview -->
+
+<div class="analytics-highlights">
+
+    <div class="analytics-highlight spending-card">
+
+        <div class="analytics-icon">
+            🍔
+        </div>
+
+        <div class="analytics-label">
+            Top Spending
+        </div>
+
+        <div class="analytics-number">
+
+            {% if category_spending %}
+                {{ category_spending.0.category__name }}
+            {% else %}
+                N/A
+            {% endif %}
+
+        </div>
+
+        <div class="analytics-meta">
+
+            {% if category_spending %}
+                ₹{{ category_spending.0.total }}
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <div class="analytics-highlight savings-card">
+
+        <div class="analytics-icon">
+            🌱
+        </div>
+
+        <div class="analytics-label">
+            Savings Rate
+        </div>
+
+        <div class="analytics-number">
+            {{ savings_rate|floatformat:1 }}%
+        </div>
+
+    </div>
+
+    <div class="analytics-highlight goal-card-analytics">
+
+        <div class="analytics-icon">
+            🎯
+        </div>
+
+        <div class="analytics-label">
+            Active Goals
+        </div>
+
+        <div class="analytics-number">
+            {{ goals|length }}
+        </div>
+
+        <div class="analytics-meta">
+            currently tracking
+        </div>
+
+    </div>
+
+    <div class="analytics-highlight budget-card">
+
+        <div class="analytics-icon">
+            📊
+        </div>
+
+        <div class="analytics-label">
+            Budget Categories
+        </div>
+
+        <div class="analytics-number">
+            {{ budget_performance|length }}
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Charts -->
+
+<div class="dashboard-grid">
+
+    <div class="panel">
+
+        <div class="section-heading">
+
+            <h3>
+                Expense Breakdown
+            </h3>
+
+            <span>
+                Spending distribution
+            </span>
+
+        </div>
+
+        <div class="analytics-chart-container">
+            <canvas id="expenseChart"></canvas>
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="section-heading">
+
+            <h3>
+                Monthly Expense Trend
+            </h3>
+
+            <span>
+                Monthly spending behaviour
+            </span>
+
+        </div>
+
+        <div class="analytics-chart-container">
+            <canvas id="monthlyTrendChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Budget + Goal Section -->
+
+<div class="dashboard-grid">
+
+    <div class="panel">
+
+        <div class="section-heading">
+
+            <h3>
+                Budget Health
+            </h3>
+
+            <span>
+                Monitor budget utilization
+            </span>
+
+        </div>
+
+        {% for budget in budget_performance %}
+
+        <div class="budget-health-item">
+
+            <div class="budget-health-header">
+
+                <span>
+                    {{ budget.category }}
+                </span>
+
+                <span>
+                    {{ budget.usage_percentage }}%
+                </span>
+
+            </div>
+
+            <div class="progress-track">
+
+                <div
+                    class="progress-fill"
+                    style="width: {{ budget.usage_percentage }}%;"
+                ></div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p>
+            No budgets created yet.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="panel">
+
+        <div class="section-heading">
+
+            <h3>
+                Goal Progress
+            </h3>
+
+            <span>
+                Track financial targets
+            </span>
+
+        </div>
+
+        {% for goal in goals %}
+
+       <div class="goal-modern-card">
+
+            <div class="goal-title">
+                🎯 {{ goal.title }}
+            </div>
+
+            <div class="goal-amount">
+
+                ₹{{ goal.current_amount }}
+
+                of
+
+                ₹{{ goal.target_amount }}
+
+            </div>
+
+            <div class="progress-track">
+
+                <div
+                    class="progress-fill goal-fill"
+                    style="width: {{ goal.progress_percentage }}%;"
+                ></div>
+
+            </div>
+
+        </div>
+
+        <div class="goal-progress-track">
+
+            <div
+                class="goal-progress-fill"
+                style="width: {{ goal.progress_percentage }}%;"
+            ></div>
+
+        </div>
+
+        <div class="goal-percent">
+
+            {{ goal.progress_percentage|floatformat:0 }}%
+
+        </div>
+
+        {% empty %}
+
+        <p>
+            No goals available.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- Smart Insights -->
+
+<div class="panel insights-panel">
+
+    <div class="section-heading">
+
+        <h3>
+            Smart Insights
+        </h3>
+
+        <span>
+            AI-powered financial observations
+        </span>
+
+    </div>
+
+    <div class="insights-grid">
+
+        <div class="insight-card">
+
+            <div class="insight-icon">
+                📈
+            </div>
+
+            <h4>
+                Savings
+            </h4>
+
+            <p>
+
+                Excellent savings rate of
+
+                {{ savings_rate|floatformat:1 }}%.
+
+            </p>
+
+        </div>
+
+        <div class="insight-card">
+
+            <div class="insight-icon">
+                🍔
+            </div>
+
+            <h4>
+                Spending Pattern
+            </h4>
+
+            <p>
+
+                {% if category_spending %}
+
+                    Your highest spending category is
+                    {{ category_spending.0.category__name }}.
+
+                {% else %}
+
+                    No spending data available.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+        <div class="insight-card">
+
+            <div class="insight-icon">
+                🎯
+            </div>
+
+            <h4>
+                Goals
+            </h4>
+
+            <p>
+
+                You currently have
+
+                {{ goals|length }}
+
+                active goals.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+window.addEventListener(
+    "load",
+    function () {
+
+        const expenseLabels =
+            {{ chart_labels|safe }};
+
+        const expenseValues =
+            {{ chart_values|safe }};
+
+        const trendLabels =
+            {{ expense_trend_labels|safe }};
+
+        const trendValues =
+            {{ expense_trend_values|safe }};
+
+    
+        new Chart(
+            document.getElementById("expenseChart"),
+            {
+                type: "doughnut",
+
+                data: {
+                    labels: expenseLabels,
+
+                    datasets: [{
+                        data: expenseValues
+                    }]
+                }
+            }
+        );
+
+        new Chart(
+            document.getElementById(
+                "monthlyTrendChart"
+            ),
+            {
+                type: "line",
+
+                data: {
+                    labels: trendLabels,
+
+                    datasets: [{
+                        label: "Expenses",
+                        data: trendValues
+                    }]
+                }
+            }
+        );
+    }
+);
+
+</script>
+
+{% endblock %}
+

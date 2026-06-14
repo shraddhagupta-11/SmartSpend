@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <a
+        href="{% url 'income_list' %}"
+        class="back-link"
+    >
+        ← Income
+    </a>
+
+    <div class="page-title">
+        Delete Income
+    </div>
+
+    <div class="page-subtitle">
+        Review before removing this record.
+    </div>
+
+</div>
+
+<div class="delete-card">
+
+    <div class="delete-icon">
+        ⚠️
+    </div>
+
+    <h3>
+        {{ income.title }}
+    </h3>
+
+    <div class="delete-details">
+
+        <p>
+            Amount:
+            <strong>
+                ₹{{ income.amount }}
+            </strong>
+        </p>
+
+        <p>
+            Source:
+            <strong>
+                {{ income.get_source_display }}
+            </strong>
+        </p>
+
+        <p>
+            Date:
+            <strong>
+                {{ income.income_date }}
+            </strong>
+        </p>
+
+    </div>
+
+    <div class="delete-warning">
+
+        This action cannot be undone.
+
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-actions">
+
+            <a
+                href="{% url 'income_list' %}"
+                class="secondary-btn"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="danger-btn"
+            >
+                Delete Income
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

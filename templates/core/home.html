@@ -1,0 +1,247 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SmartSpend</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/main.css' %}"
+    >
+
+</head>
+
+<body class="landing-page">
+
+<nav class="landing-navbar">
+
+    <div class="landing-logo">
+
+        SmartSpend
+
+    </div>
+
+    <div class="landing-actions">
+
+        <a href="{% url 'login' %}">
+            Login
+        </a>
+
+        <a
+            href="{% url 'register' %}"
+            class="landing-btn"
+        >
+            Get Started
+        </a>
+
+    </div>
+
+</nav>
+
+<section class="hero-section">
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+
+            Smart Personal Finance
+
+        </span>
+
+        <h1>
+
+            Take Control
+            <br>
+            Of Your Money.
+
+        </h1>
+
+        <p>
+
+            Track expenses, manage budgets,
+            reach savings goals and gain
+            meaningful insights — all in one
+            beautifully designed workspace.
+
+        </p>
+
+        <div class="hero-actions">
+
+            <a
+                href="{% url 'register' %}"
+                class="hero-primary-btn"
+            >
+                Start Free
+            </a>
+
+            <a
+                href="{% url 'login' %}"
+                class="hero-secondary-btn"
+            >
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="feature-grid">
+
+    <div class="feature-card expense-feature">
+
+        <div class="feature-icon">
+            💸
+        </div>
+
+        <h3>
+            Expense Tracking
+        </h3>
+
+        <p>
+            Monitor spending habits and
+            understand where your money goes.
+        </p>
+
+    </div>
+
+    <div class="feature-card income-feature">
+
+        <div class="feature-icon">
+            💰
+        </div>
+
+        <h3>
+            Income Management
+        </h3>
+
+        <p>
+            Track earnings and maintain a
+            clear financial picture.
+        </p>
+
+    </div>
+
+    <div class="feature-card goal-feature">
+
+        <div class="feature-icon">
+            🎯
+        </div>
+
+        <h3>
+            Savings Goals
+        </h3>
+
+        <p>
+            Stay motivated and achieve your
+            financial milestones faster.
+        </p>
+
+    </div>
+
+    <div class="feature-card analytics-feature">
+
+        <div class="feature-icon">
+            📈
+        </div>
+
+        <h3>
+            Smart Analytics
+        </h3>
+
+        <p>
+            Visualize spending trends and
+            make smarter decisions.
+        </p>
+
+    </div>
+
+</section>
+
+<section class="stats-strip">
+
+    <div class="stat-item">
+
+        <h2>4</h2>
+
+        <p>
+            Core Modules
+        </p>
+
+    </div>
+
+    <div class="stat-item">
+
+        <h2>100%</h2>
+
+        <p>
+            Private User Data
+        </p>
+
+    </div>
+
+    <div class="stat-item">
+
+        <h2>24/7</h2>
+
+        <p>
+            Financial Tracking
+        </p>
+
+    </div>
+
+</section>
+
+<section class="cta-section">
+
+    <h2>
+
+        Build Better Financial Habits.
+
+    </h2>
+
+    <p>
+
+        Start managing your finances with confidence.
+
+    </p>
+
+    <a
+        href="{% url 'register' %}"
+        class="hero-primary-btn"
+    >
+        Create Account
+    </a>
+
+</section>
+
+<footer class="landing-footer">
+
+    SmartSpend © 2026
+
+</footer>
+
+</body>
+
+</html>

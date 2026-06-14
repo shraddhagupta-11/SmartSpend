@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <a
+        href="{% url 'goal_list' %}"
+        class="back-link"
+    >
+        ← Goals
+    </a>
+
+    <div class="page-title">
+        Delete Goal
+    </div>
+
+    <div class="page-subtitle">
+        Review before removing this goal.
+    </div>
+
+</div>
+
+<div class="delete-card">
+
+    <div class="delete-icon">
+        ⚠️
+    </div>
+
+    <h3>
+        {{ goal.title }}
+    </h3>
+
+    <div class="delete-details">
+
+        <p>
+            Target:
+            <strong>
+                ₹{{ goal.target_amount }}
+            </strong>
+        </p>
+
+        <p>
+            Current:
+            <strong>
+                ₹{{ goal.current_amount }}
+            </strong>
+        </p>
+
+    </div>
+
+    <div class="delete-warning">
+
+        This action cannot be undone.
+
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-actions">
+
+            <a
+                href="{% url 'goal_list' %}"
+                class="secondary-btn"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="danger-btn"
+            >
+                Delete Goal
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

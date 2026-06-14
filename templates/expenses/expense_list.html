@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <a
+        href="/dashboard/"
+        class="back-link"
+    >
+        ← Dashboard
+    </a>
+
+    <div class="page-title">
+        Expenses
+    </div>
+
+    <div class="page-subtitle">
+        Track and manage your spending.
+    </div>
+
+</div>
+
+<div class="expense-topbar">
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Total Expenses
+        </div>
+
+        <div class="summary-value">
+            ₹{{ total_expenses }}
+        </div>
+
+    </div>
+
+    <a
+        href="{% url 'expense_create' %}"
+        class="add-btn"
+    >
+        + Add Expense
+    </a>
+
+</div>
+
+<div class="expense-search">
+
+    <input
+        type="text"
+        id="expenseSearch"
+        placeholder="Search expenses..."
+    >
+
+</div>
+
+<div class="table-panel">
+
+    {% if expenses %}
+
+    <table class="expense-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Title</th>
+
+                <th>Category</th>
+
+                <th>Amount</th>
+
+                <th>Date</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for expense in expenses %}
+
+            <tr class="expense-row">
+
+                <td>
+                    {{ expense.title }}
+                </td>
+
+                <td>
+
+                    <span class="category-badge">
+
+                        {{ expense.category }}
+
+                    </span>
+
+                </td>
+
+                <td class="amount-cell">
+
+                    ₹{{ expense.amount }}
+
+                </td>
+
+                <td>
+
+                    {{ expense.expense_date }}
+
+                </td>
+
+                <td>
+
+                    <a
+                        href="{% url 'expense_update' expense.id %}"
+                        class="action-link edit-link"
+                    >
+                        Edit
+                    </a>
+
+                    <a
+                        href="{% url 'expense_delete' expense.id %}"
+                        class="action-link delete-link"
+                    >
+                        Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <div class="empty-icon">
+            💸
+        </div>
+
+        <h3>
+            No Expenses Yet
+        </h3>
+
+        <p>
+            Start tracking your spending.
+        </p>
+
+        <a
+            href="{% url 'expense_create' %}"
+            class="add-btn"
+        >
+            Add First Expense
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+
+document
+.getElementById(
+    "expenseSearch"
+)
+?.addEventListener(
+    "keyup",
+    function(){
+
+        let value =
+            this.value.toLowerCase();
+
+        document
+        .querySelectorAll(
+            ".expense-row"
+        )
+        .forEach(
+            row => {
+
+                row.style.display =
+                    row.innerText
+                    .toLowerCase()
+                    .includes(value)
+                    ? ""
+                    : "none";
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+{% endblock %}

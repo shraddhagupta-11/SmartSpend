@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <a
+        href="/dashboard/"
+        class="back-link"
+    >
+        ← Dashboard
+    </a>
+
+    <div class="page-title">
+        Profile
+    </div>
+
+    <div class="page-subtitle">
+        Manage your account and financial workspace.
+    </div>
+
+</div>
+
+<div class="profile-grid">
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+
+            {{ request.user.username|first|upper }}
+
+        </div>
+
+        <h2>
+
+            {{ request.user.username }}
+
+        </h2>
+
+        <p class="profile-email">
+
+            {{ request.user.email }}
+
+        </p>
+
+        <a
+            href="{% url 'profile_update' %}"
+            class="add-btn profile-btn"
+        >
+            Edit Profile
+        </a>
+
+    </div>
+
+    <div class="profile-card">
+
+        <h3>
+            Account Information
+        </h3>
+
+        <div class="profile-info">
+
+            <div class="profile-item">
+
+                <span>Email</span>
+
+                <strong>
+                    {{ request.user.email }}
+                </strong>
+
+            </div>
+
+            <div class="profile-item">
+
+                <span>Username</span>
+
+                <strong>
+                    {{ request.user.username }}
+                </strong>
+
+            </div>
+
+            <div class="profile-item">
+
+                <span>Phone</span>
+
+                <strong>
+                    {{ request.user.phone_number|default:"Not Provided" }}
+                </strong>
+
+            </div>
+
+            <div class="profile-item">
+
+                <span>Bio</span>
+
+                <strong>
+                    {{ request.user.profile.bio|default:"No bio added yet." }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="profile-card profile-links">
+
+    <h3>
+        Quick Access
+    </h3>
+
+    <div class="quick-link-grid">
+
+        <a href="/expenses/" class="quick-link-card">
+            💸 Expenses
+        </a>
+
+        <a href="/income/" class="quick-link-card">
+            💰 Income
+        </a>
+
+        <a href="/budgets/" class="quick-link-card">
+            📊 Budgets
+        </a>
+
+        <a href="/goals/" class="quick-link-card">
+            🎯 Goals
+        </a>
+
+    </div>
+
+</div>
+
+<div class="profile-card">
+
+    <h3>
+        Account Actions
+    </h3>
+
+    <form
+        method="post"
+        action="{% url 'logout' %}"
+    >
+
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="danger-btn"
+        >
+            Logout
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

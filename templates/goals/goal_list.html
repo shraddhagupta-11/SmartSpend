@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <a
+        href="/dashboard/"
+        class="back-link"
+    >
+        ← Dashboard
+    </a>
+
+    <div class="page-title">
+        Goals
+    </div>
+
+    <div class="page-subtitle">
+        Monitor your financial targets.
+    </div>
+
+</div>
+
+<div class="expense-topbar">
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Active Goals
+        </div>
+
+        <div class="summary-value">
+            {{ goals|length }}
+        </div>
+
+    </div>
+
+    <a
+        href="{% url 'goal_create' %}"
+        class="add-btn"
+    >
+        + Add Goal
+    </a>
+
+</div>
+
+{% if goals %}
+
+<div class="goal-grid">
+
+    {% for goal in goals %}
+
+    <div class="goal-card">
+
+        <div class="goal-header">
+
+            <h3>
+                {{ goal.title }}
+            </h3>
+
+            {% if goal.progress_percentage >= 100 %}
+
+                <span class="goal-status success">
+                    Completed
+                </span>
+
+            {% elif goal.progress_percentage >= 75 %}
+
+                <span class="goal-status warning">
+                    Almost There
+                </span>
+
+            {% else %}
+
+                <span class="goal-status progress">
+                    In Progress
+                </span>
+
+            {% endif %}
+
+        </div>
+
+        {% if goal.description %}
+
+        <p class="goal-description">
+
+            {{ goal.description }}
+
+        </p>
+
+        {% endif %}
+
+        <div class="goal-stats">
+
+            <div>
+
+                <small>Target</small>
+
+                <strong>
+                    ₹{{ goal.target_amount }}
+                </strong>
+
+            </div>
+
+            <div>
+
+                <small>Saved</small>
+
+                <strong>
+                    ₹{{ goal.current_amount }}
+                </strong>
+
+            </div>
+
+            <div>
+
+                <small>Remaining</small>
+
+                <strong>
+                    ₹{{ goal.remaining_amount }}
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="budget-progress-header">
+
+            <span>
+                Progress
+            </span>
+
+            <span>
+                {{ goal.progress_percentage }}%
+            </span>
+
+        </div>
+
+        <div class="progress">
+
+            <div
+                class="progress-bar bg-primary"
+                style="
+                    width:
+                    {{ goal.progress_percentage }}%;
+                "
+            ></div>
+
+        </div>
+
+        {% if goal.target_date %}
+
+        <div class="goal-date">
+
+            🎯 Target Date:
+            {{ goal.target_date }}
+
+        </div>
+
+        {% endif %}
+
+        <div class="budget-actions">
+
+            <a
+                href="{% url 'goal_update' goal.id %}"
+                class="action-link edit-link"
+            >
+                Edit
+            </a>
+
+            <a
+                href="{% url 'goal_delete' goal.id %}"
+                class="action-link delete-link"
+            >
+                Delete
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-state">
+
+    <div class="empty-icon">
+        🎯
+    </div>
+
+    <h3>
+        No Goals Yet
+    </h3>
+
+    <p>
+        Start planning your financial future.
+    </p>
+
+    <a
+        href="{% url 'goal_create' %}"
+        class="add-btn"
+    >
+        Create First Goal
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

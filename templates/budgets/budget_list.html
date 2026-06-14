@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <a
+        href="/dashboard/"
+        class="back-link"
+    >
+        ← Dashboard
+    </a>
+
+    <div class="page-title">
+        Budgets
+    </div>
+
+    <div class="page-subtitle">
+        Manage your spending limits.
+    </div>
+
+</div>
+
+<div class="expense-topbar">
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Active Budgets
+        </div>
+
+        <div class="summary-value">
+            {{ budgets|length }}
+        </div>
+
+    </div>
+
+    <a
+        href="{% url 'budget_create' %}"
+        class="add-btn"
+    >
+        + Add Budget
+    </a>
+
+</div>
+
+{% if budgets %}
+
+<div class="budget-grid">
+
+    {% for budget in budgets %}
+
+    <div class="budget-card">
+
+        <div class="budget-card-header">
+
+            <h3>
+                {{ budget.category }}
+            </h3>
+
+            <div class="budget-status">
+
+                {% if budget.usage_percentage >= 100 %}
+
+                    Over Budget
+
+                {% elif budget.usage_percentage >= 90 %}
+
+                    Critical
+
+                {% elif budget.usage_percentage >= 75 %}
+
+                    Warning
+
+                {% else %}
+
+                    Healthy
+
+                {% endif %}
+
+            </div>
+
+            <span class="budget-month">
+
+                {{ budget.budget_month|date:"F Y" }}
+
+            </span>
+
+        </div>
+
+        <div class="budget-stats">
+
+            <div>
+
+                <small>Budget</small>
+
+                <strong>
+                    ₹{{ budget.amount }}
+                </strong>
+
+            </div>
+
+            <div>
+
+                <small>Spent</small>
+
+                <strong>
+                    ₹{{ budget.spent_amount }}
+                </strong>
+
+            </div>
+
+            <div>
+
+                <small>Remaining</small>
+
+                <strong
+                    class="
+                        {% if budget.remaining_amount < 0 %}
+                            text-danger
+                        {% endif %}
+                    "
+                >
+                    ₹{{ budget.remaining_amount }}
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="budget-progress-header">
+
+            <span>
+                Utilization
+            </span>
+
+            <span>
+                {{ budget.usage_percentage }}%
+            </span>
+
+        </div>
+
+        <div class="progress">
+
+            <div
+                class="
+                    progress-bar
+
+                    {% if budget.usage_percentage >= 90 %}
+                        bg-danger
+
+                    {% elif budget.usage_percentage >= 75 %}
+                        bg-warning
+
+                    {% else %}
+                        bg-success
+
+                    {% endif %}
+                "
+                style="
+                    width:
+                    {{ budget.usage_percentage }}%;
+                "
+            ></div>
+
+        </div>
+
+        {% if budget.usage_percentage >= 100 %}
+
+            <div class="budget-alert danger">
+
+                ❌ Budget Exceeded
+
+            </div>
+
+        {% elif budget.usage_percentage >= 90 %}
+
+            <div class="budget-alert warning">
+
+                ⚠ Budget Almost Exhausted
+
+            </div>
+
+        {% endif %}
+
+        <div class="budget-actions">
+
+            <a
+                href="{% url 'budget_update' budget.id %}"
+                class="action-link edit-link"
+            >
+                Edit
+            </a>
+
+            <a
+                href="{% url 'budget_delete' budget.id %}"
+                class="action-link delete-link"
+            >
+                Delete
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-state">
+
+    <div class="empty-icon">
+        📊
+    </div>
+
+    <h3>
+        No Budgets Yet
+    </h3>
+
+    <p>
+        Create a budget to start controlling your spending.
+    </p>
+
+    <a
+        href="{% url 'budget_create' %}"
+        class="add-btn"
+    >
+        Create First Budget
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

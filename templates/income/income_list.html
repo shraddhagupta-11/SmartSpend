@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <a
+        href="/dashboard/"
+        class="back-link"
+    >
+        ← Dashboard
+    </a>
+
+    <div class="page-title">
+        Income
+    </div>
+
+    <div class="page-subtitle">
+        Track and manage your earnings.
+    </div>
+
+</div>
+
+<div class="expense-topbar">
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Total Income
+        </div>
+
+        <div class="summary-value">
+            ₹{{ total_income }}
+        </div>
+
+    </div>
+
+    <a
+        href="{% url 'income_create' %}"
+        class="add-btn"
+    >
+        + Add Income
+    </a>
+
+</div>
+
+<div class="expense-search">
+
+    <input
+        type="text"
+        id="incomeSearch"
+        placeholder="Search income..."
+    >
+
+</div>
+
+<div class="table-panel">
+
+    {% if incomes %}
+
+    <table class="expense-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Title</th>
+
+                <th>Source</th>
+
+                <th>Amount</th>
+
+                <th>Date</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for income in incomes %}
+
+            <tr class="income-row">
+
+                <td>
+                    {{ income.title }}
+                </td>
+
+                <td>
+
+                    <span class="category-badge">
+
+                        {{ income.get_source_display }}
+
+                    </span>
+
+                </td>
+
+                <td class="income-amount">
+
+                    ₹{{ income.amount }}
+
+                </td>
+
+                <td>
+
+                    {{ income.income_date }}
+
+                </td>
+
+                <td>
+
+                    <a
+                        href="{% url 'income_update' income.id %}"
+                        class="action-link edit-link"
+                    >
+                        Edit
+                    </a>
+
+                    <a
+                        href="{% url 'income_delete' income.id %}"
+                        class="action-link delete-link"
+                    >
+                        Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <div class="empty-icon">
+            💰
+        </div>
+
+        <h3>
+            No Income Records Yet
+        </h3>
+
+        <p>
+            Start tracking your earnings.
+        </p>
+
+        <a
+            href="{% url 'income_create' %}"
+            class="add-btn"
+        >
+            Add First Income
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+
+document
+.getElementById(
+    "incomeSearch"
+)
+?.addEventListener(
+    "keyup",
+    function(){
+
+        let value =
+            this.value.toLowerCase();
+
+        document
+        .querySelectorAll(
+            ".income-row"
+        )
+        .forEach(
+            row => {
+
+                row.style.display =
+                    row.innerText
+                    .toLowerCase()
+                    .includes(value)
+                    ? ""
+                    : "none";
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-header">
+
+    <div>
+
+        <h1>
+            Welcome Back 👋
+        </h1>
+
+        <p>
+            Track your finances smarter.
+        </p>
+
+    </div>
+
+</div>
+
+<div class="quick-actions">
+
+    <a href="{% url 'expense_create' %}" class="action-card">
+        💸 Add Expense
+    </a>
+
+    <a href="{% url 'income_create' %}" class="action-card">
+        💰 Add Income
+    </a>
+
+    <a href="{% url 'budget_create' %}" class="action-card">
+        📊 Add Budget
+    </a>
+
+    <a href="{% url 'goal_create' %}" class="action-card">
+        🎯 Add Goal
+    </a>
+
+</div>
+
+<div class="stats-grid">
+
+    <div class="fin-card income">
+
+        <div class="card-icon">
+            💰
+        </div>
+
+        <div class="stat-label">
+            Total Income
+        </div>
+
+        <div class="stat-number">
+            ₹{{ total_income }}
+        </div>
+
+        <div class="stat-subtitle">
+            Monthly earnings
+        </div>
+
+    </div>
+
+    <div class="fin-card expense">
+
+        <div class="card-icon">
+            💸
+        </div>
+
+        <div class="stat-label">
+            Total Expenses
+        </div>
+
+        <div class="stat-number">
+            ₹{{ total_expenses }}
+        </div>
+
+        <div class="stat-subtitle">
+            Money spent
+        </div>
+
+    </div>
+
+    <div class="fin-card balance">
+
+        <div class="card-icon">
+            🏦
+        </div>
+
+        <div class="stat-label">
+            Net Balance
+        </div>
+
+        <div class="stat-number">
+            ₹{{ net_balance }}
+        </div>
+
+        <div class="stat-subtitle">
+            Available funds
+        </div>
+
+    </div>
+
+    <div class="fin-card savings">
+
+        <div class="card-icon">
+            📈
+        </div>
+
+        <div class="stat-label">
+            Savings Rate
+        </div>
+
+        <div class="stat-number">
+            {{ savings_rate }}%
+        </div>
+
+        <div class="stat-subtitle">
+            Financial health
+        </div>
+
+    </div>
+
+</div>
+
+<div class="dashboard-grid">
+
+    <div class="panel">
+
+        <h3>
+            Financial Insights
+        </h3>
+
+        {% for insight in insights %}
+
+            <div class="insight-item">
+
+                {{ insight }}
+
+            </div>
+
+        {% empty %}
+
+            <p>
+                No insights available.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="panel">
+
+        <h3>
+            Recent Activity
+        </h3>
+
+        {% if recent_activity %}
+
+            <div class="activity-list">
+
+                {% for item in recent_activity %}
+
+                <div class="activity-item">
+
+                    <div class="activity-icon">
+
+                        {% if item.type == "expense" %}
+                            💸
+                        {% else %}
+                            💰
+                        {% endif %}
+
+                    </div>
+
+                    <div class="activity-content">
+
+                        <div class="activity-title">
+
+                            {{ item.title }}
+
+                        </div>
+
+                        <div class="activity-date">
+
+                            {{ item.date }}
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="
+                            activity-amount
+                            {% if item.type == 'expense' %}
+                                expense
+                            {% else %}
+                                income
+                            {% endif %}
+                        "
+                    >
+
+                        ₹{{ item.amount }}
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📋
+                </div>
+
+                <p>
+                    No recent activity yet.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
